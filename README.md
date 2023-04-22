@@ -1,6 +1,6 @@
 # Rust + Axum + Prisma
 
-A template for creating services in Rust using Axum and Prisma. This uses the super cool [Prisma Rust Client](https://github.com/Brendonovich/prisma-client-rust).
+A template for creating services in Rust using `Axum`, `Prisma` and `async-graphql`. This uses the super cool `Prisma`.
 
 ## Getting Started
 
@@ -15,6 +15,9 @@ Then you can run the `cargo-watch -x run` command to watch for changes and autom
 ## Prisma
 
 To set up prisma, run:
+
+1. `cargo prisma generate` create the `prisma.rs` file, see `prisma/schema.prisma`
+2. `cargo prisma db push` sync the code and database
 
 ```bash
 cargo prisma generate # outputs client to src/prisma.rs
@@ -79,6 +82,8 @@ query {
   }
 }
 ```
+## Future
+I will try to make it become a more and more complete
 
 ## Notes
 
