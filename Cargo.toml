@@ -18,8 +18,8 @@ prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust
   "migrations",
   "sqlite",
 ], default-features = false }
-tokio = { version = "1.0", features = ["full"] }
-serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
 axum = "0.6.16"
 dotenv = "0.15.0"
 async-graphql = "5.0.7"
