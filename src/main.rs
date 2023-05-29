@@ -22,7 +22,7 @@ async fn graphql_handler(schema: Extension<AppSchema>, req: GraphQLRequest) -> G
 
 async fn graphql_playground() -> impl IntoResponse {
     Html(playground_source(GraphQLPlaygroundConfig::new(
-        "/api/graphql",
+        "/api",
     )))
 }
 
@@ -39,15 +39,13 @@ async fn main() {
     let app = Router::new()
         // I prefer to prefix my graphql endpoint with /api, but use whatever you like.
         // just make sure it matches the path in graphql_playground()
-        .route(
-            "/api/graphql",
-            get(graphql_playground).post(graphql_handler),
-        )
+        .route("/api", get(graphql_playground).post(graphql_handler))
+        .route("/ws", get(graphql_playground))
         .layer(Extension(schema));
 
     // macos Monterey i hate u so much for causing me so much headache to figure out
     // port 5000 is now taken??
-    println!("Playground: http://localhost:8080/api/graphql");
+    println!("runing: http://localhost:8080/api");
 
     axum::Server::bind(&"0.0.0.0:8080".parse().unwrap())
         .serve(app.into_make_service())

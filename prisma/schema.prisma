@@ -1,6 +1,11 @@
 datasource db {
   provider = "sqlite"
   url      = "file:dev.db"
+
+  // e.x. postgresql 
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL") // read from `.env` or environment
+  // url      = "postgresql://USER:PASSWORD@HOST:PORT/DATABASE?KEY1=VALUE&KEY2=VALUE&KEY3=VALUE"
 }
 
 generator client {
@@ -8,6 +13,7 @@ generator client {
   output   = "../src/prisma.rs"
 }
 
+// user
 model User {
   id          String @id @default(uuid())
   displayName String
@@ -20,3 +26,29 @@ model Post {
   user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  String
 }
+
+model GeoUser {
+  uid BigInt               @id @default(autoincrement())
+  pt  Unsupported("point")
+}
+
+model GeoStore {
+  sid BigInt               @id @default(autoincrement())
+  pt  Unsupported("point")
+}
+
+model Store { 
+  sid BigInt  @id @default(autoincrement())
+  store_name String
+  store_decription String
+  state Int // @db.SmallInt
+}
+
+model Moment {
+  id BigInt @id @default(autoincrement())
+  uid BigInt 
+  content String 
+  create_time DateTime
+}
+
+

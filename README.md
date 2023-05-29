@@ -47,6 +47,13 @@ mutation {
   }
 }
 
+# Delete People
+mutation {
+  deleteUser(id: "cf5a7caf-6e18-4759-bbfc-8da15978dec9") {
+    id
+  }
+}
+
 # Create post
 mutation {
   createPost(
@@ -60,6 +67,13 @@ mutation {
     user {
       displayName
     }
+  }
+}
+# Get one user
+query {
+  getUser(id: "cf5a7caf-6e18-4759-bbfc-8da15978dec9") {
+    id
+    displayName
   }
 }
 
@@ -82,7 +96,9 @@ query {
   }
 }
 ```
+
 ## Future
+
 I will try to make it become a more and more complete
 
 ## Notes
