@@ -85,6 +85,18 @@ query {
   }
 }
 
+# Get one post
+query {
+  getPost(id: "d97920e2-83fb-44d0-81c1-93e13b69b7ff") {
+    id
+    content
+    user {
+      id
+      displayName
+    }
+  }
+}
+
 # Get all posts
 query {
   getPosts {

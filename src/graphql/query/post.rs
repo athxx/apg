@@ -1,6 +1,9 @@
 use async_graphql::{Context, Object, Result};
 
-use crate::{graphql::types::Post, prisma::PrismaClient};
+use crate::{
+    graphql::types::Post,
+    prisma::{post, PrismaClient},
+};
 
 #[derive(Default)]
 pub struct PostQuery;
@@ -9,7 +12,6 @@ pub struct PostQuery;
 impl PostQuery {
     async fn get_posts(&self, ctx: &Context<'_>) -> Result<Vec<Post>> {
         let db = ctx.data::<PrismaClient>().unwrap();
-
         Ok(db
             .post()
             .find_many(vec![])
@@ -18,5 +20,15 @@ impl PostQuery {
             .into_iter()
             .map(|p| p.into())
             .collect())
+    }
+
+    async fn get_post(&self, ctx: &Context<'_>, id: String) -> Result<Option<Post>> {
+        let db = ctx.data::<PrismaClient>().unwrap();
+        Ok(db
+            .post()
+            .find_unique(post::id::equals(id))
+            .exec()
+            .await?
+            .map(|u| u.into()))
     }
 }

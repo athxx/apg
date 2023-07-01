@@ -1,4 +1,4 @@
-use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
+use async_graphql::http::{playground_source, GraphQLPlaygroundConfig, GraphiQLSource};
 use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
 use axum::{
     extract::Extension,
@@ -21,9 +21,11 @@ async fn graphql_handler(schema: Extension<AppSchema>, req: GraphQLRequest) -> G
 }
 
 async fn graphql_playground() -> impl IntoResponse {
-    Html(playground_source(GraphQLPlaygroundConfig::new(
-        "/api",
-    )))
+    Html(playground_source(GraphQLPlaygroundConfig::new("/api")))
+}
+
+async fn graphiql() -> impl IntoResponse {
+    Html(GraphiQLSource::build().endpoint("/").finish())
 }
 
 // Note: This template uses Axum, but the bulk of the setup is for async_graphql. You should be able
@@ -39,8 +41,8 @@ async fn main() {
     let app = Router::new()
         // I prefer to prefix my graphql endpoint with /api, but use whatever you like.
         // just make sure it matches the path in graphql_playground()
-        .route("/api", get(graphql_playground).post(graphql_handler))
-        .route("/ws", get(graphql_playground))
+        .route("/api", get(graphiql).post(graphql_handler))
+        .route("/playground", get(graphql_playground))
         .layer(Extension(schema));
 
     // macos Monterey i hate u so much for causing me so much headache to figure out
