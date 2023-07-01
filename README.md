@@ -47,7 +47,7 @@ mutation {
   }
 }
 
-# Delete People
+# Delete user
 mutation {
   deleteUser(id: "cf5a7caf-6e18-4759-bbfc-8da15978dec9") {
     id
